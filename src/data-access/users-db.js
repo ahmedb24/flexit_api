@@ -63,7 +63,7 @@ export default function makeCommentsDb({ makeDb, Id }) {
     const result = await db
       .collection("sessions")
       .updateOne({ user_id: email }, { $set: { jwt } }, { upsert: true });
-    return result.modifiedCount > 0 ? { id: _id, email, jwt } : null;
+    return result.modifiedCount > 0 || result.upsertedCount ? { email, jwt } : null;
   }
 
   async function logoutUser(email) {
@@ -77,24 +77,23 @@ export default function makeCommentsDb({ makeDb, Id }) {
   async function findSession(email) {
     const db = await makeDb();
     const result = await db.collection("sessions").findOne({ user_id: email });
-    const found = await result.toArray();
-    if (found.length === 0) {
+    const found = result;
+    if (!found) {
       return null;
     }
-    const { _id: id, ...info } = found[0];
+    const { _id: id, ...info } = found;
     return { id, ...info };
   }
   
   async function findByToken(jwt) {
     const db = await makeDb();
-    const result = await db.collection("sessions").findOne({ user_id: jwt });
-    const found = await result.toArray();
-    if (found.length === 0) {
+    const result = await db.collection("sessions").findOne({ jwt: jwt });
+    const found = result;
+    if (!found) {
       return null;
     }
-    const { email } = found[0];
-
-    return await findByEmail(email)
+    const { user_id } = found;
+    return await findByEmail({ email: user_id })
   }
 
   async function remove(email) {

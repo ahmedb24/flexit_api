@@ -10,7 +10,8 @@ module.exports = function makeExpressCallback (controller) {
       headers: {
         'Content-Type': req.get('Content-Type'),
         Referer: req.get('referer'),
-        'User-Agent': req.get('User-Agent')
+        'User-Agent': req.get('User-Agent'),
+        'Authorization': req.get('Authorization')
       }
     }
     controller(httpRequest)

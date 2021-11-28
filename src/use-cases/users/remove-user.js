@@ -11,7 +11,7 @@ export default function makeDeleteUser ({ UsersDb, jwt }) {
       throw new Error(error)
     }
     
-    const user = makeUser(await UsersDb.findByEmail(userClaim.email))
+    const user = makeUser(await UsersDb.findByToken(jwt))
     if (!(await user.comparePassword(password))) {
       throw new Error('Make sure your password is correct.')
     }
@@ -24,7 +24,7 @@ export default function makeDeleteUser ({ UsersDb, jwt }) {
       if (error) {
         return { error }
       }
-      return new User(res)
+      return res
     })
 }
 }

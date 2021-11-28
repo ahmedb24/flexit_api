@@ -15,6 +15,6 @@ export default function makeAddUser ({ UsersDb }) {
     }
 
     const user = makeUser(userData)
-    return await UsersDb.loginUser(user.email, user.encoded())
+    return await UsersDb.loginUser(user.getEmail(), user.encoded())
  }
 }

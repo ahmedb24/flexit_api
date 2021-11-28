@@ -3,6 +3,7 @@ import sanitizeHtml from 'sanitize-html'
 import buildMakeUser from './user'
 import validators from '../../validators'
 import jwt from 'jsonwebtoken'
+import bcrypt from 'bc'
 
 
 const makeUser = buildMakeUser({ md5, validators, jwt })

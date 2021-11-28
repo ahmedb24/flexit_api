@@ -1,4 +1,4 @@
-export default function buildMakeUser ({ md5, validators, jwt }) {
+export default function buildMakeUser ({ md5, validators, jwt, bcrypt }) {
     return function makeUser ({
       name ,
       email,
@@ -34,7 +34,7 @@ export default function buildMakeUser ({ md5, validators, jwt }) {
             return await bcrypt.compare(plainText, this.password)
         },
         encoded() {
-            return jwt.sign(
+          return jwt.sign(
               {
                 exp: Math.floor(Date.now() / 1000) + 60 * 60 * 4,
                 ...this.toJson(),

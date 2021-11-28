@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel-plugin-inline-dotenv": "^1.2.2",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.18.3",
     "cuid": "^2.1.6",
     "express": "^4.16.4",
